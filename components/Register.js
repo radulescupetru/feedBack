@@ -11,6 +11,8 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 
+import styles from '../components/styles'
+
 class Register extends Component {
   static navigationOptions = {
     title: 'Register',
@@ -49,7 +51,7 @@ class Register extends Component {
             keyboardType="email-address"
             onChangeText={text => this.setState({ text })}
           />
-          <Button title="Set your profile" color="white" onPress={()=>navigate('CompleteProfile')}/>
+          <Button width = "80%" title="Set your profile" color="white" onPress={()=>navigate('CompleteProfile')}/>
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
@@ -60,31 +62,5 @@ class Register extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-around",
-    width: "100%",
-    height: "80%",
-    backgroundColor: "#0360BC"
-  },
-  title: {
-    color: "white",
-    fontSize: 16,
-    textAlign: "center"
-  },
-  identity: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  buttons: {
-    flex: 1,
-    marginTop: -50,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "90%"
-  }
-});
+
 export default Register;
