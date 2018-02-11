@@ -1,15 +1,28 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text } from 'react-native';
+import { AppRegistry, Text,View,StyleSheet } from 'react-native';
 
-class HelloWorld extends Component {
+import Login from '../feedBack/components/Login'
+class App extends Component {
   render() {
     return (
-      <Text>ptr</Text>
+      <Login/>
     )
   }
 }
 
-export default HelloWorld;
+const styles = StyleSheet.create({
+  wrapper:{
+    flex:1,
+    alignItems:"center",
+    justifyContent:"space-around",
+    backgroundColor:"pink"
+  },
+  inner:{
+    width:"80%",
+    backgroundColor:"white",
 
+  }
+})
+export default App;
 
 
