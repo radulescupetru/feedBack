@@ -32,6 +32,7 @@ class HomePage extends Component {
         <View style={styles.home_wrapper}>
           <ScrollView
             horizontal={true}
+            bounces={true}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.story_wrapper}
           >
@@ -57,7 +58,9 @@ class HomePage extends Component {
               <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
             </View>
           </ScrollView>
-          <View style={styles.schedule_wrapper} />
+          <ScrollView stycontentContainerStylele={styles.schedule_wrapper}>
+
+          </ScrollView>
         </View>
       </View>
     );
