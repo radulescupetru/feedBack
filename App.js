@@ -9,7 +9,8 @@ import {
 const App = StackNavigator({
   Login:{screen:Login},
   Register: { screen: Register },
-  CompleteProfile: { screen: CompleteProfile }},
+  CompleteProfile: { screen: CompleteProfile },
+  Home:{screen:Home}},
   {
    headerMode:"none"
   });
@@ -18,6 +19,7 @@ const App = StackNavigator({
 import Register from '../feedBack/components/Register'
 import Login from '../feedBack/components/Login'
 import CompleteProfile from '../feedBack/components/CompleteProfile'
+import Home from '../feedBack/components/HomePage'
 
 export default App;
 

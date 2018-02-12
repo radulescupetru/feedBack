@@ -114,7 +114,7 @@ class CompleteProfile extends Component {
   }
 
   showActionSheet(type) {
-    ActionSheet.showActionSheetWithOptions(
+    ActionSheetIOS.showActionSheetWithOptions(
       {
         options: BUTTONSiOS,
         cancelButtonIndex: CANCEL_INDEX,

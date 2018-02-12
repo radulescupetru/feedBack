@@ -56,7 +56,7 @@ class Register extends Component {
           <Button
             title="Login"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
-            onPress={() => navigate("CompleteProfile")}
+            onPress={() => navigate("Home")}
           />
         </KeyboardAvoidingView>
 
