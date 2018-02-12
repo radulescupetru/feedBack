@@ -62,7 +62,7 @@ class CompleteProfile extends Component {
             underlineColorAndroid="transparent"
             onChangeText={text => this.setState({ text })}
           />
-          <Text>Repeat password</Text>
+
           <TextInput
             style={{
               height: 35,
@@ -80,27 +80,33 @@ class CompleteProfile extends Component {
             onChangeText={text => this.setState({ text })}
           />
         </KeyboardAvoidingView>
-        <View style={styles.buttons}>
-          <Text
-            style={styles.dropdown}
-            onPress={() => this.showActionSheet(this.state.grupa)}
-          >
-            {this.state.grupa}
-          </Text>
+        {Platform.OS === "ios" ? (
+          <View style={styles.buttons}>
+            <Text
+              style={styles.dropdown}
+              onPress={() => this.showActionSheet(this.state.grupa)}
+            >
+              {this.state.grupa}
+            </Text>
+            <Text
+              style={styles.dropdown}
+              onPress={() => this.showActionSheet(this.state.limba)}
+            >
+              {this.state.limba}
+            </Text>
+          </View>
+        ) : (
+          <Picker selectedValue="Petru" style={(width = "80%")}>
+            <Picker.Item label="item" value="item1" />
+            <Picker.Item label="item2" value="item2" />
+          </Picker>
+        )}
 
-          <Text
-            style={styles.dropdown}
-            onPress={() => this.showActionSheet(this.state.limba)}
-          >
-            {this.state.limba}
-          </Text>
-
-          <Button
-            title="Finish"
-            color={Platform.OS == "ios" ? "white" : "#00b894"}
-            onPress={() => navigate("Login")}
-          />
-        </View>
+        <Button
+          title="Finish"
+          color={Platform.OS == "ios" ? "white" : "#00b894"}
+          onPress={() => navigate("Login")}
+        />
       </View>
     );
   }
