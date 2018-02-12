@@ -15,10 +15,8 @@ import {
 } from "react-native";
 
 import styles from "../components/styles";
-import ActionSheet from "@yfuks/react-native-action-sheet";
 
 var BUTTONSiOS = ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"];
-var BUTTONSandroid = ["Option 0", "Option 1", "Option 2"];
 
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
@@ -47,32 +45,15 @@ class CompleteProfile extends Component {
 
         <KeyboardAvoidingView behavior="padding" style={styles.buttons}>
           <TextInput
-            style={{
-              height: 35,
-              color: "#0360BC",
-              backgroundColor: "white",
-              width: "80%",
-              textAlign: "left",
-              padding: 10,
-              marginBottom: 10
-            }}
+            style={styles.textInputStyle}
             placeholder={"password".toUpperCase()}
             keyboardType="default"
             secureTextEntry={true}
             underlineColorAndroid="transparent"
             onChangeText={text => this.setState({ text })}
           />
-
           <TextInput
-            style={{
-              height: 35,
-              color: "#0360BC",
-              backgroundColor: "white",
-              width: "80%",
-              textAlign: "left",
-              padding: 10,
-              marginBottom: 10
-            }}
+            style={styles.textInputStyle}
             placeholder={"repeat password".toUpperCase()}
             underlineColorAndroid="transparent"
             secureTextEntry={true}
@@ -80,6 +61,7 @@ class CompleteProfile extends Component {
             onChangeText={text => this.setState({ text })}
           />
         </KeyboardAvoidingView>
+        
         {Platform.OS === "ios" ? (
           <View style={styles.buttons}>
             <Text
@@ -97,14 +79,28 @@ class CompleteProfile extends Component {
           </View>
         ) : (
           <View style={styles.buttons}>
-          <Picker style={{width:"80%"}} selectedValue={this.state.limba} mode="dropdown" onValueChange={(itemValue, itemIndex) => this.setState({limba: itemValue})}>
-            <Picker.Item label="item" value="item1" />
-            <Picker.Item label="item2" value="item2" />
-          </Picker>
-          <Picker style={{width:"80%"}} selectedValue={this.state.grupa} mode="dropdown" onValueChange={(itemValue, itemIndex) => this.setState({grupa: itemValue})}>
-            <Picker.Item label="item" value="item1" />
-            <Picker.Item label="item2" value="item2" />
-          </Picker>
+            <Picker
+              style={{ width: "80%" }}
+              selectedValue={this.state.limba}
+              mode="dropdown"
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ limba: itemValue })
+              }
+            >
+              <Picker.Item label="item" value="item1" />
+              <Picker.Item label="item2" value="item2" />
+            </Picker>
+            <Picker
+              style={{ width: "80%" }}
+              selectedValue={this.state.grupa}
+              mode="dropdown"
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ grupa: itemValue })
+              }
+            >
+              <Picker.Item label="item" value="item1" />
+              <Picker.Item label="item2" value="item2" />
+            </Picker>
           </View>
         )}
 
@@ -120,19 +116,14 @@ class CompleteProfile extends Component {
   showActionSheet(type) {
     ActionSheet.showActionSheetWithOptions(
       {
-        options: Platform.OS == "ios" ? BUTTONSiOS : BUTTONSandroid,
+        options: BUTTONSiOS,
         cancelButtonIndex: CANCEL_INDEX,
         destructiveButtonIndex: DESTRUCTIVE_INDEX
       },
       buttonIndex => {
-        if (type == this.state.grupa && Platform.OS === "ios")
+        if (type == this.state.grupa)
           this.setState({ grupa: BUTTONSiOS[buttonIndex].toUpperCase() });
-        else if (type == this.state.grupa && Platform.OS === "android")
-          this.setState({ grupa: BUTTONSandroid[buttonIndex].toUpperCase() });
-        else if (type != this.state.grupa && Platform.OS === "ios")
-          this.setState({ limba: BUTTONSiOS[buttonIndex].toUpperCase() });
-        else
-          this.setState({ limba: BUTTONSandroid[buttonIndex].toUpperCase() });
+        else this.setState({ limba: BUTTONSiOS[buttonIndex].toUpperCase() });
       }
     );
   }

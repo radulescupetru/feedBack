@@ -12,11 +12,11 @@ import {
   Platform
 } from "react-native";
 
-import styles from '../components/styles'
+import styles from "../components/styles";
 
 class Register extends Component {
   static navigationOptions = {
-    title: 'Login',
+    title: "Login"
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -39,52 +39,37 @@ class Register extends Component {
 
         <KeyboardAvoidingView behavior="padding" style={styles.buttons}>
           <TextInput
-            style={{
-              height: 35,
-              color: "#0360BC",
-              backgroundColor: "white",
-              width: "80%",
-              textAlign: "left",
-              padding: 10,
-              marginBottom: 30,
-             
-            }}            
+            style={styles.textInputStyle}
             placeholder={"name@student.unitbv.ro".toUpperCase()}
-            underlineColorAndroid= 'transparent'
+            underlineColorAndroid="transparent"
             keyboardType="email-address"
             onChangeText={text => this.setState({ text })}
           />
           <TextInput
-            style={{
-              height: 35,
-              color: "#0360BC",
-              backgroundColor: "white",
-              width: "80%",
-              textAlign: "left",
-              padding: 10,
-              marginBottom: 30,
-             
-            }}            
+            style={styles.textInputStyle}
             placeholder={"password".toUpperCase()}
-            underlineColorAndroid= 'transparent'
+            underlineColorAndroid="transparent"
             keyboardType="default"
             secureTextEntry={true}
             onChangeText={text => this.setState({ text })}
           />
-          <Button title="Login" color={Platform.OS=="ios"?"white":"#00b894"}  onPress={()=>navigate('CompleteProfile')}/>
+          <Button
+            title="Login"
+            color={Platform.OS == "ios" ? "white" : "#00b894"}
+            onPress={() => navigate("CompleteProfile")}
+          />
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
-        <Button
+          <Button
             title="Register"
-            color={Platform.OS=="ios"?"white":"#00b894"}
-            onPress={()=>navigate('Register')}
+            color={Platform.OS == "ios" ? "white" : "#00b894"}
+            onPress={() => navigate("Register")}
           />
         </View>
       </View>
     );
   }
 }
-
 
 export default Register;

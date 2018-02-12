@@ -12,11 +12,11 @@ import {
   Platform
 } from "react-native";
 
-import styles from '../components/styles'
+import styles from "../components/styles";
 
 class Register extends Component {
   static navigationOptions = {
-    title: 'Register',
+    title: "Register"
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -39,24 +39,18 @@ class Register extends Component {
 
         <KeyboardAvoidingView behavior="padding" style={styles.buttons}>
           <TextInput
-            style={{
-              height: 35,
-              color: "#0360BC",
-              backgroundColor: "white",
-              width: "80%",
-              textAlign: "left",
-              padding: 10,
-              marginBottom: 30,
-             
-            }}
-            
+            style={styles.textInputStyle}
             placeholder={"name@student.unitbv.ro".toUpperCase()}
-            underlineColorAndroid= 'transparent'
+            underlineColorAndroid="transparent"
             keyboardType="email-address"
             onChangeText={text => this.setState({ text })}
           />
-          
-          <Button title="Set your profile" color={Platform.OS=="ios"?"white":"#00b894"}  onPress={()=>navigate('CompleteProfile')}/>
+
+          <Button
+            title="Set your profile"
+            color={Platform.OS == "ios" ? "white" : "#00b894"}
+            onPress={() => navigate("CompleteProfile")}
+          />
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
@@ -66,6 +60,5 @@ class Register extends Component {
     );
   }
 }
-
 
 export default Register;
