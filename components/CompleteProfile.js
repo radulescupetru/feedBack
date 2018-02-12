@@ -96,10 +96,16 @@ class CompleteProfile extends Component {
             </Text>
           </View>
         ) : (
-          <Picker selectedValue="Petru" style={(width = "80%")}>
+          <View style={styles.buttons}>
+          <Picker style={{width:"80%"}} selectedValue={this.state.limba} mode="dropdown" onValueChange={(itemValue, itemIndex) => this.setState({limba: itemValue})}>
             <Picker.Item label="item" value="item1" />
             <Picker.Item label="item2" value="item2" />
           </Picker>
+          <Picker style={{width:"80%"}} selectedValue={this.state.grupa} mode="dropdown" onValueChange={(itemValue, itemIndex) => this.setState({grupa: itemValue})}>
+            <Picker.Item label="item" value="item1" />
+            <Picker.Item label="item2" value="item2" />
+          </Picker>
+          </View>
         )}
 
         <Button
