@@ -14,10 +14,12 @@ import {
   Picker
 } from "react-native";
 
-import styles from '../components/styles';
-import ActionSheet from 'react-native-actionsheet'
+import styles from "../components/styles";
+import ActionSheet from "@yfuks/react-native-action-sheet";
 
-var BUTTONS = ["Option 0", "Option 1", "Option 2", "Destruct", "Cancel"];
+var BUTTONSiOS = ["Option 0", "Option 1", "Option 2", "Delete", "Cancel"];
+var BUTTONSandroid = ["Option 0", "Option 1", "Option 2"];
+
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
 
@@ -26,19 +28,9 @@ class CompleteProfile extends Component {
     super(props);
     this.state = {
       grupa: "10LF263",
-      limba: "ENGLEZA",
-      selected:" "
+      limba: "ENGLEZA"
     };
-    this.handlePress = this.handlePress.bind(this)
-    this.showActionSheet = this.showActionSheet.bind(this)
   }
- 
-  handlePress(i) {
-    this.setState({
-      selected: i
-    })
-  }
-
   static navigationOptions = {
     title: "CompleteProfile"
   };
@@ -48,7 +40,7 @@ class CompleteProfile extends Component {
       <View style={styles.wrapper}>
         <View style={styles.identity}>
           <Image
-            style={{marginTop:-50, height: 70, width: 90 }}
+            style={{ marginTop: -50, height: 70, width: 90 }}
             source={require("../components/images/emblema.png")}
           />
         </View>
@@ -67,9 +59,10 @@ class CompleteProfile extends Component {
             placeholder={"password".toUpperCase()}
             keyboardType="default"
             secureTextEntry={true}
-            underlineColorAndroid= 'transparent'
+            underlineColorAndroid="transparent"
             onChangeText={text => this.setState({ text })}
           />
+          <Text>Repeat password</Text>
           <TextInput
             style={{
               height: 35,
@@ -81,51 +74,56 @@ class CompleteProfile extends Component {
               marginBottom: 10
             }}
             placeholder={"repeat password".toUpperCase()}
-            underlineColorAndroid= 'transparent'
+            underlineColorAndroid="transparent"
             secureTextEntry={true}
             keyboardType="default"
             onChangeText={text => this.setState({ text })}
           />
-          </KeyboardAvoidingView>
-          <View style={styles.buttons}>
-          <Text style={styles.dropdown} onPress={() => this.showActionSheet(this.state.grupa)}>
+        </KeyboardAvoidingView>
+        <View style={styles.buttons}>
+          <Text
+            style={styles.dropdown}
+            onPress={() => this.showActionSheet(this.state.grupa)}
+          >
             {this.state.grupa}
           </Text>
 
-          <Text style={styles.dropdown} onPress={() => this.showActionSheet(this.state.limba)}>
+          <Text
+            style={styles.dropdown}
+            onPress={() => this.showActionSheet(this.state.limba)}
+          >
             {this.state.limba}
           </Text>
 
           <Button
             title="Finish"
-            color={Platform.OS=="ios"?"white":"#00b894"}
-            onPress={()=>navigate('Login')}
+            color={Platform.OS == "ios" ? "white" : "#00b894"}
+            onPress={() => navigate("Login")}
           />
-          </View>
+        </View>
       </View>
     );
   }
 
-
   showActionSheet(type) {
-    let platform = ActionSheet;
-    if(Platform.OS==='ios')
-      platform=ActionSheetIOS;
-
-      platform.showActionSheetWithOptions(
-        {
-          options: BUTTONS,
-          cancelButtonIndex: CANCEL_INDEX,
-          destructiveButtonIndex: DESTRUCTIVE_INDEX
-        },
-        buttonIndex => {
-          if (type == this.state.grupa)
-            this.setState({ grupa: BUTTONS[buttonIndex].toUpperCase() });
-          else this.setState({ limba: BUTTONS[buttonIndex].toUpperCase() });
-        }
-      );
-    }
-    
+    ActionSheet.showActionSheetWithOptions(
+      {
+        options: Platform.OS == "ios" ? BUTTONSiOS : BUTTONSandroid,
+        cancelButtonIndex: CANCEL_INDEX,
+        destructiveButtonIndex: DESTRUCTIVE_INDEX
+      },
+      buttonIndex => {
+        if (type == this.state.grupa && Platform.OS === "ios")
+          this.setState({ grupa: BUTTONSiOS[buttonIndex].toUpperCase() });
+        else if (type == this.state.grupa && Platform.OS === "android")
+          this.setState({ grupa: BUTTONSandroid[buttonIndex].toUpperCase() });
+        else if (type != this.state.grupa && Platform.OS === "ios")
+          this.setState({ limba: BUTTONSiOS[buttonIndex].toUpperCase() });
+        else
+          this.setState({ limba: BUTTONSandroid[buttonIndex].toUpperCase() });
+      }
+    );
   }
+}
 
 export default CompleteProfile;

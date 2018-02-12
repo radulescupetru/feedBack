@@ -11,7 +11,7 @@ module.exports=StyleSheet.create({
     wrapper: {
       flex: 1,
       alignItems: "center",
-      justifyContent: "center",
+      justifyContent: "space-between",
       width: "100%",
       height: "80%",
       backgroundColor: "#00b894"
