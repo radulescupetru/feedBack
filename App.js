@@ -7,6 +7,7 @@ import {
 
 
 const App = StackNavigator({
+  Login:{screen:Login},
   Register: { screen: Register },
   CompleteProfile: { screen: CompleteProfile }},
   {
@@ -15,6 +16,7 @@ const App = StackNavigator({
   
 
 import Register from '../feedBack/components/Register'
+import Login from '../feedBack/components/Login'
 import CompleteProfile from '../feedBack/components/CompleteProfile'
 
 export default App;

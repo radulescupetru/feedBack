@@ -10,32 +10,45 @@ import {
   Alert,
   KeyboardAvoidingView,
   ActionSheetIOS,
-  Platform
+  Platform,
+  Picker
 } from "react-native";
 
-import styles from '../components/styles'
+import styles from '../components/styles';
+import ActionSheet from 'react-native-actionsheet'
 
 var BUTTONS = ["Option 0", "Option 1", "Option 2", "Destruct", "Cancel"];
 var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
 
 class CompleteProfile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       grupa: "10LF263",
-      limba: "engleza"
+      limba: "ENGLEZA",
+      selected:" "
     };
+    this.handlePress = this.handlePress.bind(this)
+    this.showActionSheet = this.showActionSheet.bind(this)
   }
+ 
+  handlePress(i) {
+    this.setState({
+      selected: i
+    })
+  }
+
   static navigationOptions = {
     title: "CompleteProfile"
   };
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.wrapper}>
         <View style={styles.identity}>
           <Image
-            style={{ marginBottom: 20, height: 100, width: 120 }}
+            style={{marginTop:-50, height: 70, width: 90 }}
             source={require("../components/images/emblema.png")}
           />
         </View>
@@ -43,33 +56,38 @@ class CompleteProfile extends Component {
         <KeyboardAvoidingView behavior="padding" style={styles.buttons}>
           <TextInput
             style={{
-              height: 40,
+              height: 35,
               color: "#0360BC",
               backgroundColor: "white",
               width: "80%",
               textAlign: "left",
               padding: 10,
-              marginBottom: 30
+              marginBottom: 10
             }}
             placeholder={"password".toUpperCase()}
             keyboardType="default"
+            secureTextEntry={true}
+            underlineColorAndroid= 'transparent'
             onChangeText={text => this.setState({ text })}
           />
           <TextInput
             style={{
-              height: 40,
+              height: 35,
               color: "#0360BC",
               backgroundColor: "white",
               width: "80%",
               textAlign: "left",
               padding: 10,
-              marginBottom: 30
+              marginBottom: 10
             }}
             placeholder={"repeat password".toUpperCase()}
+            underlineColorAndroid= 'transparent'
+            secureTextEntry={true}
             keyboardType="default"
             onChangeText={text => this.setState({ text })}
           />
-
+          </KeyboardAvoidingView>
+          <View style={styles.buttons}>
           <Text style={styles.dropdown} onPress={() => this.showActionSheet(this.state.grupa)}>
             {this.state.grupa}
           </Text>
@@ -80,28 +98,34 @@ class CompleteProfile extends Component {
 
           <Button
             title="Finish"
-            color="white"
-            onPress={() => Alert.alert("Alerted")}
+            color={Platform.OS=="ios"?"white":"#00b894"}
+            onPress={()=>navigate('Login')}
           />
-        </KeyboardAvoidingView>
+          </View>
       </View>
     );
   }
 
+
   showActionSheet(type) {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options: BUTTONS,
-        cancelButtonIndex: CANCEL_INDEX,
-        destructiveButtonIndex: DESTRUCTIVE_INDEX
-      },
-      buttonIndex => {
-        if (type == this.state.grupa)
-          this.setState({ grupa: BUTTONS[buttonIndex] });
-        else this.setState({ limba: BUTTONS[buttonIndex] });
-      }
-    );
+    let platform = ActionSheet;
+    if(Platform.OS==='ios')
+      platform=ActionSheetIOS;
+
+      platform.showActionSheetWithOptions(
+        {
+          options: BUTTONS,
+          cancelButtonIndex: CANCEL_INDEX,
+          destructiveButtonIndex: DESTRUCTIVE_INDEX
+        },
+        buttonIndex => {
+          if (type == this.state.grupa)
+            this.setState({ grupa: BUTTONS[buttonIndex].toUpperCase() });
+          else this.setState({ limba: BUTTONS[buttonIndex].toUpperCase() });
+        }
+      );
+    }
+    
   }
-}
 
 export default CompleteProfile;

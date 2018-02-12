@@ -16,7 +16,7 @@ import styles from '../components/styles'
 
 class Register extends Component {
   static navigationOptions = {
-    title: 'Register',
+    title: 'Login',
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -48,19 +48,38 @@ class Register extends Component {
               padding: 10,
               marginBottom: 30,
              
-            }}
-            
+            }}            
             placeholder={"name@student.unitbv.ro".toUpperCase()}
             underlineColorAndroid= 'transparent'
             keyboardType="email-address"
             onChangeText={text => this.setState({ text })}
           />
-          
-          <Button title="Set your profile" color={Platform.OS=="ios"?"white":"#00b894"}  onPress={()=>navigate('CompleteProfile')}/>
+          <TextInput
+            style={{
+              height: 35,
+              color: "#0360BC",
+              backgroundColor: "white",
+              width: "80%",
+              textAlign: "left",
+              padding: 10,
+              marginBottom: 30,
+             
+            }}            
+            placeholder={"password".toUpperCase()}
+            underlineColorAndroid= 'transparent'
+            keyboardType="default"
+            secureTextEntry={true}
+            onChangeText={text => this.setState({ text })}
+          />
+          <Button title="Login" color={Platform.OS=="ios"?"white":"#00b894"}  onPress={()=>navigate('CompleteProfile')}/>
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
-          <Text style={{ color: "white" }}>{"FeedbackApp".toUpperCase()}</Text>
+        <Button
+            title="Register"
+            color={Platform.OS=="ios"?"white":"#00b894"}
+            onPress={()=>navigate('Register')}
+          />
         </View>
       </View>
     );
