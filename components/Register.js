@@ -16,7 +16,7 @@ import styles from "../components/styles";
 
 class Register extends Component {
   static navigationOptions = {
-    title: "Login"
+    title: "Register"
   };
   render() {
     const { navigate } = this.props.navigation;
@@ -45,27 +45,16 @@ class Register extends Component {
             keyboardType="email-address"
             onChangeText={text => this.setState({ text })}
           />
-          <TextInput
-            style={styles.textInputStyle}
-            placeholder={"password".toUpperCase()}
-            underlineColorAndroid="transparent"
-            keyboardType="default"
-            secureTextEntry={true}
-            onChangeText={text => this.setState({ text })}
-          />
+
           <Button
-            title="Login"
+            title="Set your profile"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
             onPress={() => navigate("CompleteProfile")}
           />
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
-          <Button
-            title="Register"
-            color={Platform.OS == "ios" ? "white" : "#00b894"}
-            onPress={() => navigate("Register")}
-          />
+          <Text style={{ color: "white" }}>{"FeedbackApp".toUpperCase()}</Text>
         </View>
       </View>
     );
