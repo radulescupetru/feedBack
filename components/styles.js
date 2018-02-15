@@ -1,8 +1,8 @@
 "use strict";
 
 var React = require("react-native");
-
 var { StyleSheet } = React;
+import constants from '../constants/Constants'
 
 module.exports = StyleSheet.create({
   wrapper: {
@@ -11,7 +11,7 @@ module.exports = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     height: "80%",
-    backgroundColor: "#00b894"
+    backgroundColor:constants.primary_color
   },
   title: {
     color: "white",

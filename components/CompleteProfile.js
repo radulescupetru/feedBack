@@ -25,7 +25,6 @@ class CompleteProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      grupa: "10LF263",
       limba: "ENGLEZA"
     };
   }
@@ -66,13 +65,7 @@ class CompleteProfile extends Component {
           <View style={styles.buttons}>
             <Text
               style={styles.dropdown}
-              onPress={() => this.showActionSheet(this.state.grupa)}
-            >
-              {this.state.grupa}
-            </Text>
-            <Text
-              style={styles.dropdown}
-              onPress={() => this.showActionSheet(this.state.limba)}
+              onPress={() => this.showActionSheet()}
             >
               {this.state.limba}
             </Text>
@@ -90,17 +83,6 @@ class CompleteProfile extends Component {
               <Picker.Item label="item" value="item1" />
               <Picker.Item label="item2" value="item2" />
             </Picker>
-            <Picker
-              style={{ width: "80%" }}
-              selectedValue={this.state.grupa}
-              mode="dropdown"
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ grupa: itemValue })
-              }
-            >
-              <Picker.Item label="item" value="item1" />
-              <Picker.Item label="item2" value="item2" />
-            </Picker>
           </View>
         )}
 
@@ -113,7 +95,7 @@ class CompleteProfile extends Component {
     );
   }
 
-  showActionSheet(type) {
+  showActionSheet() {
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: BUTTONSiOS,
@@ -121,9 +103,7 @@ class CompleteProfile extends Component {
         destructiveButtonIndex: DESTRUCTIVE_INDEX
       },
       buttonIndex => {
-        if (type == this.state.grupa)
-          this.setState({ grupa: BUTTONSiOS[buttonIndex].toUpperCase() });
-        else this.setState({ limba: BUTTONSiOS[buttonIndex].toUpperCase() });
+        this.setState({ limba: BUTTONSiOS[buttonIndex].toUpperCase() });
       }
     );
   }

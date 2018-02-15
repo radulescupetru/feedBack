@@ -7,10 +7,13 @@ import {
   Image,
   Button,
   KeyboardAvoidingView,
-  ScrollView
+  ScrollView,
+  SectionList
 } from "react-native";
 
 import styles from "../components/home_styles";
+import CardView from "react-native-cardview";
+import CourseCard from "../components/CourseCard";
 
 class HomePage extends Component {
   constructor(props) {
@@ -30,37 +33,116 @@ class HomePage extends Component {
           />
         </View>
         <View style={styles.home_wrapper}>
-          <ScrollView
-            horizontal={true}
-            bounces={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.story_wrapper}
-          >
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
-            </View>
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"teo".toUpperCase()}</Text>
-            </View>
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"stfn".toUpperCase()}</Text>
-            </View>
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
-            </View>
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"teo".toUpperCase()}</Text>
-            </View>
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"stfn".toUpperCase()}</Text>
-            </View>
-            <View style={styles.story_item}>
-              <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
-            </View>
-          </ScrollView>
-          <ScrollView stycontentContainerStylele={styles.schedule_wrapper}>
-
-          </ScrollView>
+          <View style={styles.story_wrapper}>
+            <ScrollView
+              horizontal={true}
+              bounces={true}
+              showsHorizontalScrollIndicator={false}
+            >
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+              </View>
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"teo".toUpperCase()}</Text>
+              </View>
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"stfn".toUpperCase()}</Text>
+              </View>
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
+              </View>
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"teo".toUpperCase()}</Text>
+              </View>
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"stfn".toUpperCase()}</Text>
+              </View>
+              <View style={styles.story_item}>
+                <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
+              </View>
+            </ScrollView>
+            <Text
+              style={{
+                marginHorizontal: 15,
+                color: "#bbb",
+                fontWeight: "bold"
+              }}
+            >
+              {"Feedback cursuri".toUpperCase()}
+            </Text>
+          </View>
+          <View style={styles.schedule_wrapper}>
+            <ScrollView
+              contentContainerStyle={{
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between"
+              }}
+            >
+              <CardView
+                style={styles.card_style}
+                cardElevation={8}
+                cardMaxElevation={8}
+                cornerRadius={5}
+              >
+                <View>
+                  <Image
+                    style={{ height: 100,width:"100%"}}
+                    source={require('../components/images/monday.jpg')}
+                  />
+                </View>
+                <CourseCard
+                  teacher="S.Homana"
+                  course="Germana"
+                  classRoom="PIII1"
+                  time="8:00-9:50"
+                />
+                <CourseCard
+                  teacher="S.Homana"
+                  course="Germana"
+                  classRoom="PIII1"
+                  time="8:00-9:50"
+                />
+                <CourseCard
+                  teacher="S.Homana"
+                  course="Germana"
+                  classRoom="PIII1"
+                  time="8:00-9:50"
+                />
+              </CardView>
+              <CardView
+                style={styles.card_style}
+                cardElevation={8}
+                cardMaxElevation={8}
+                cornerRadius={5}
+              >
+                <View>
+                  <Image
+                    style={{ height: 100,width:"100%"}}
+                    source={require('../components/images/tuesday.jpg')}
+                  />
+                </View>
+                <CourseCard
+                  teacher="S.Homana"
+                  course="Germana"
+                  classRoom="PIII1"
+                  time="8:00-9:50"
+                />
+                <CourseCard
+                  teacher="S.Homana"
+                  course="Germana"
+                  classRoom="PIII1"
+                  time="8:00-9:50"
+                />
+                <CourseCard
+                  teacher="S.Homana"
+                  course="Germana"
+                  classRoom="PIII1"
+                  time="8:00-9:50"
+                />
+              </CardView>
+            </ScrollView>
+          </View>
         </View>
       </View>
     );

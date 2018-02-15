@@ -7,10 +7,10 @@ import {
 
 
 const App = StackNavigator({
+  Home:{screen:Home},
   Login:{screen:Login},
   Register: { screen: Register },
-  CompleteProfile: { screen: CompleteProfile },
-  Home:{screen:Home}},
+  CompleteProfile: { screen: CompleteProfile }},
   {
    headerMode:"none"
   });

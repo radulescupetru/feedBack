@@ -24,7 +24,9 @@
     "link": "^0.1.5",
     "react": "16.2.0",
     "react-native": "^0.52.0",
-    "react-native-actionsheet": "^2.3.0"
+    "react-native-actionsheet": "^2.3.0",
+    "react-native-cardview": "^1.1.5",
+    "react-native-linear-gradient": "^2.4.0"
   },
   "rnpm": {
     "assets": [
