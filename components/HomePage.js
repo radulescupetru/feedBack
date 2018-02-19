@@ -79,11 +79,9 @@ class HomePage extends Component {
                 justifyContent: "space-between"
               }}
             >
-              <CardView
+              <View
                 style={styles.card_style}
-                cardElevation={8}
-                cardMaxElevation={8}
-                cornerRadius={5}
+                elevation={8}
               >
                 <View>
                   <Image
@@ -109,12 +107,10 @@ class HomePage extends Component {
                   classRoom="PIII1"
                   time="8:00-9:50"
                 />
-              </CardView>
-              <CardView
+              </View>
+              <View
                 style={styles.card_style}
-                cardElevation={8}
-                cardMaxElevation={8}
-                cornerRadius={5}
+                elevation={8}
               >
                 <View>
                   <Image
@@ -140,7 +136,7 @@ class HomePage extends Component {
                   classRoom="PIII1"
                   time="8:00-9:50"
                 />
-              </CardView>
+              </View>
             </ScrollView>
           </View>
         </View>

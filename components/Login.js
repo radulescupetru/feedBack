@@ -27,10 +27,10 @@ class Register extends Component {
             style={{ marginBottom: 20, height: 100, width: 120 }}
             source={require("../components/images/emblema.png")}
           />
-          <Text style={styles.title}>
+          <Text className="text" style={styles.title}>
             Universitatea Transilvania din Brasov
           </Text>
-          <Text style={styles.title}>
+          <Text className="text" style={styles.title}>
             {"Facultatea de Matematica".toUpperCase() +
               "\n" +
               " si Informatica".toUpperCase()}
@@ -52,6 +52,7 @@ class Register extends Component {
             keyboardType="default"
             secureTextEntry={true}
             onChangeText={text => this.setState({ text })}
+            onFocus={()=>this.refs.text.style=hidden="true"}
           />
           <Button
             title="Login"

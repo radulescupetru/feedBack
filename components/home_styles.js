@@ -61,7 +61,15 @@ module.exports = StyleSheet.create({
     width: "90%",
     flex:1,
     backgroundColor: constants.primary_color,
-    marginVertical:10
+    marginVertical:10,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
+
   },
   course_title: {
     fontSize: 20,
