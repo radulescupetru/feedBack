@@ -22,6 +22,40 @@ class HomePage extends Component {
   static navigationOptions = {
     title: "Home"
   };
+  initialArr = [
+    {
+      key: 1,
+      teacher: "S.Homana",
+      course: "Germana",
+      classRoom: "PIII1",
+      time: "8:00-9:50"
+    },
+    {
+      key: 2,
+      teacher: "S.omana",
+      course: "Engleza",
+      classRoom: "PIII1",
+      time: "8:00-9:50"
+    },
+    {
+      key: 3,
+      teacher: "S.Hoana",
+      course: "Franceza",
+      classRoom: "PIII1",
+      time: "8:00-9:50"
+    }
+  ];
+  daysArr = [
+    {
+      key: 1,
+      day:require('../components/images/monday.jpg')
+    },
+    {
+      key: 2,
+      day:require('../components/images/tuesday.jpg')
+    }
+  ];
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -79,69 +113,38 @@ class HomePage extends Component {
                 justifyContent: "space-between"
               }}
             >
-              <View
-                style={styles.card_style}
-                elevation={8}
-              >
-                <View>
-                  <Image
-                    style={{ height: 100,width:"100%"}}
-                    source={require('../components/images/monday.jpg')}
-                  />
-                </View>
-                <CourseCard
-                  teacher="S.Homana"
-                  course="Germana"
-                  classRoom="PIII1"
-                  time="8:00-9:50"
-                />
-                <CourseCard
-                  teacher="S.Homana"
-                  course="Germana"
-                  classRoom="PIII1"
-                  time="8:00-9:50"
-                />
-                <CourseCard
-                  teacher="S.Homana"
-                  course="Germana"
-                  classRoom="PIII1"
-                  time="8:00-9:50"
-                />
-              </View>
-              <View
-                style={styles.card_style}
-                elevation={8}
-              >
-                <View>
-                  <Image
-                    style={{ height: 100,width:"100%"}}
-                    source={require('../components/images/tuesday.jpg')}
-                  />
-                </View>
-                <CourseCard
-                  teacher="S.Homana"
-                  course="Germana"
-                  classRoom="PIII1"
-                  time="8:00-9:50"
-                />
-                <CourseCard
-                  teacher="S.Homana"
-                  course="Germana"
-                  classRoom="PIII1"
-                  time="8:00-9:50"
-                />
-                <CourseCard
-                  teacher="S.Homana"
-                  course="Germana"
-                  classRoom="PIII1"
-                  time="8:00-9:50"
-                />
-              </View>
+              {this.daysArr.map(it => {
+                return (
+                  <View style={styles.card_style} key={it.key} elevation={8}>
+                    <View>
+                      <Image
+                        style={{ height: 100, width: "100%" }}
+                        source={it.day}
+                      />
+                    </View>
+                    {this.initialArr.map(iterator => {
+                      return (
+                        <CourseCard
+                          teacher={iterator.teacher}
+                          course={iterator.course}
+                          classRoom={iterator.classRoom}
+                          time={iterator.time}
+                          key={iterator.key}
+                        />
+                      );
+                    })}
+                  </View>
+                );
+              })}
             </ScrollView>
           </View>
         </View>
       </View>
     );
+  }
+  renderCard() {
+    {
+    }
   }
 }
 

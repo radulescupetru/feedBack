@@ -15,6 +15,12 @@ import {
 import styles from "../components/styles";
 
 class Register extends Component {
+  constructor() {
+    super();
+    this.state = {
+      showText: true
+    };
+  }
   static navigationOptions = {
     title: "Login"
   };
@@ -24,12 +30,15 @@ class Register extends Component {
       <View style={styles.wrapper}>
         <View style={styles.identity}>
           <Image
-            style={{ marginBottom: 20, height: 100, width: 120 }}
+            style={{ marginBottom: 20, height: 70, width: 90 }}
             source={require("../components/images/emblema.png")}
           />
-          <Text className="text" style={styles.title}>
-            Universitatea Transilvania din Brasov
-          </Text>
+          {this.state.showText && (
+            <Text className="text" style={styles.title}>
+              Universitatea Transilvania din Brasov
+            </Text>
+          )}
+
           <Text className="text" style={styles.title}>
             {"Facultatea de Matematica".toUpperCase() +
               "\n" +
@@ -52,11 +61,12 @@ class Register extends Component {
             keyboardType="default"
             secureTextEntry={true}
             onChangeText={text => this.setState({ text })}
-            onFocus={()=>this.refs.text.style=hidden="true"}
+            onFocus={()=>this.toggleState}
           />
           <Button
             title="Login"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
+            style={styles.button}
             onPress={() => navigate("Home")}
           />
         </KeyboardAvoidingView>
@@ -70,6 +80,11 @@ class Register extends Component {
         </View>
       </View>
     );
+  }
+  toggleState() {
+    console.warn(this.state.showText);
+    this.state.showText ? false : true;
+    console.wart(this.state.showText);
   }
 }
 

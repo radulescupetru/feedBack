@@ -31,7 +31,7 @@ class Register extends Component {
       <View style={styles.wrapper}>
         <View style={styles.identity}>
           <Image
-            style={{ marginBottom: 20, height: 100, width: 120 }}
+            style={{ marginBottom: 20, height: 70, width: 90 }}
             source={require("../components/images/emblema.png")}
           />
           <Text style={styles.title}>
