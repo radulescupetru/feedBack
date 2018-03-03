@@ -7,7 +7,7 @@ const REACTIONS = [
   { label: "OK", src: require('./assets/ambitious.png'), bigSrc: require('./assets/ambitious_big.png') },
   { label: "Fericit", src: require('./assets/smile.png'), bigSrc: require('./assets/smile_big.png') },
 ];
-const WIDTH = 320;
+const WIDTH = 250;
 const DISTANCE =  WIDTH / REACTIONS.length;
 const END = WIDTH - DISTANCE;
 

@@ -8,7 +8,8 @@ import {
   Button,
   KeyboardAvoidingView,
   ScrollView,
-  SectionList
+  SectionList,
+  TouchableHighlight
 } from "react-native";
 
 import styles from "../components/home_styles";
@@ -48,11 +49,11 @@ class HomePage extends Component {
   daysArr = [
     {
       key: 1,
-      day:require('../components/images/monday.jpg')
+      day: require("../components/images/monday.jpg")
     },
     {
       key: 2,
-      day:require('../components/images/tuesday.jpg')
+      day: require("../components/images/tuesday.jpg")
     }
   ];
 
@@ -60,12 +61,14 @@ class HomePage extends Component {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.page_wrapper}>
-        <View style={styles.header_image}>
-          <Image
-            style={{ height: 50, width: 60 }}
-            source={require("../components/images/emblema.png")}
-          />
-        </View>
+        <TouchableHighlight onPress={() => navigate("FeedBack")}>
+          <View style={styles.header_image}>
+            <Image
+              style={{ height: 50, width: 60 }}
+              source={require("../components/images/emblema.png")}
+            />
+          </View>
+        </TouchableHighlight>
         <View style={styles.home_wrapper}>
           <View style={styles.story_wrapper}>
             <ScrollView

@@ -8,6 +8,7 @@ import {
 
 const App = StackNavigator({
  
+  FeedBack:{screen:FeedBack},
   Login:{screen:Login},
   Register: { screen: Register },
   Home:{screen:Home},
@@ -21,6 +22,7 @@ import Register from '../feedBack/components/Register'
 import Login from '../feedBack/components/Login'
 import CompleteProfile from '../feedBack/components/CompleteProfile'
 import Home from '../feedBack/components/HomePage'
+import FeedBack from '../feedBack/components/FeedBack'
 
 export default App;
 
