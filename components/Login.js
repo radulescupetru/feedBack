@@ -13,6 +13,7 @@ import {
 } from "react-native";
 
 import styles from "../components/styles";
+import axios from "axios";
 
 class Register extends Component {
   constructor() {
@@ -61,13 +62,13 @@ class Register extends Component {
             keyboardType="default"
             secureTextEntry={true}
             onChangeText={text => this.setState({ text })}
-            onFocus={()=>this.toggleState}
+            onFocus={() => this.toggleState}
           />
           <Button
             title="Login"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
             style={styles.button}
-            onPress={() => navigate("Home")}
+            onPress={() => this.login(this.state.text)}
           />
         </KeyboardAvoidingView>
 
@@ -85,6 +86,27 @@ class Register extends Component {
     console.warn(this.state.showText);
     this.state.showText ? false : true;
     console.wart(this.state.showText);
+  }
+  login(user) {
+    result = new RegExp("@student.unitbv.ro").test(user);
+    if (result) {
+      axios
+        .get(
+          "http://wickedapp.azurewebsites.net/Account/StudentLogin/",
+          {
+            params: {
+              email: user
+            }
+          }
+        )
+        .then(function(response) {
+          console.log(response.data)
+          
+        })
+        .catch(function(error) {
+          console.warn(error);
+        });
+    }
   }
 }
 

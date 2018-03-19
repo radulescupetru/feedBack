@@ -5,64 +5,70 @@ var { StyleSheet } = React;
 import constants from "../constants/Constants";
 
 module.exports = StyleSheet.create({
-  page_wrapper: {
-    backgroundColor: constants.primary_color,
+  feedback_info: {
+    flex: 0,
+    alignItems: "flex-start",
+    justifyContent: "center",
+    width: "100%",
+    height: 150,
+    padding: 10
+  },
+  card_text: {
+    fontSize: 20,
+    color:constants.text_color,
+    fontWeight: "900",
+    padding:10
+  },
+  card_text_description: {
+    fontSize: 16,
+    color: constants.text_color,
+    padding:10
+  },
+  container: {
     flex: 1,
-    justifyContent:"center",
+    justifyContent:"space-around",
     alignItems:"center"
   },
-  header_image: {
-    flex: 0,
-    alignItems: "center",
+  card: {
+    flex: -1,
     justifyContent: "center",
-    height: 100,
-    backgroundColor: constants.primary_color,
-    paddingTop: 10
-  },
-  card_wrapper: {
-    flex: 0,
-    borderRadius:10,
     backgroundColor: "white",
-    width:"90%",
     height:"70%",
-    alignItems:"center",
-    justifyContent:"space-around",
-  },
-  stacked_card:{
-    position:"absolute",
-    borderRadius:10,
-    backgroundColor:"white",
-    opacity:0.7,
-    bottom:35,
     width:"80%",
-    height:"15%"
+    borderRadius:15,
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 0.3
   },
-  card_content:{
-    flex:3,
-    alignItems:"center",
-    justifyContent:"space-around"
-  },
-  text_wrapper:{
-    flex:0,
+  card_info:{
+    flex:1,
     alignItems:"flex-start",
     justifyContent:"center",
-    height:"50%"
+    backgroundColor:constants.primary_color,
+    borderRadius:15,
+    borderBottomEndRadius:0,
+    borderBottomStartRadius:0
+    
   },
-  card_description:{
-    fontSize:16,
-    opacity:0.8,
-    fontWeight:"600",
-    color:constants.text_color,
+  card_vote:{
+    flex:3,
+    alignItems:"center",
+    justifyContent:"space-around",
+    zIndex:2
   },
-  card_text:{
-    fontSize:16,
-    opacity:0.8,
-    fontWeight:"600",
-    color:constants.primary_color,
-    textAlign:"left",
-    paddingBottom:10
+  title:{
+    fontSize:18,
+    fontWeight:"800",
+    marginBottom:-100
   },
-  emoji:{
-    flex:3
+  button_container:{
+      flex:1,
+      flexDirection:"row",
+      alignItems:"center",
+      justifyContent:"space-between"
   }
 });

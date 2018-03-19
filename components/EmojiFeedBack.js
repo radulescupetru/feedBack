@@ -16,9 +16,6 @@ export default class SmileyFeedBack extends React.Component {
     super(props);
     this._pan = new Animated.Value(2 * DISTANCE);
   }
-  static navigationOptions = {
-    title: "FeedBack"
-  };
   componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetResponderCapture: () => true,
@@ -30,7 +27,7 @@ export default class SmileyFeedBack extends React.Component {
       onPanResponderMove: Animated.event([null, {dx: this._pan}]),
       onPanResponderRelease: () => {
         this._pan.flattenOffset();
-
+        console.log("release")
         let offset = Math.max(0, this._pan._value + 0);
         if (offset < 0) return this._pan.setValue(0);
         if (offset > END) return this._pan.setValue(END);
