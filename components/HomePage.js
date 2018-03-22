@@ -77,25 +77,29 @@ class HomePage extends Component {
               showsHorizontalScrollIndicator={false}
             >
               <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+                <TouchableHighlight onPress={()=>this.giveFeedBack()}>
+                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+                </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"teo".toUpperCase()}</Text>
+              <TouchableHighlight>
+                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+                </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"stfn".toUpperCase()}</Text>
+              <TouchableHighlight>
+                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+                </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
+              <TouchableHighlight>
+                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+                </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"teo".toUpperCase()}</Text>
-              </View>
-              <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"stfn".toUpperCase()}</Text>
-              </View>
-              <View style={styles.story_item}>
-                <Text style={styles.course_title}>{"paun".toUpperCase()}</Text>
+              <TouchableHighlight>
+                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
+                </TouchableHighlight>
               </View>
             </ScrollView>
             <Text
@@ -145,9 +149,9 @@ class HomePage extends Component {
       </View>
     );
   }
-  renderCard() {
-    {
-    }
+  giveFeedBack(){
+    const {navigate} = this.props.navigation
+    navigate("FeedBack")
   }
 }
 

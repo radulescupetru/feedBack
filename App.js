@@ -7,19 +7,22 @@ import {
 
 
 const App = StackNavigator({
+ 
+  Login:{screen:Login},   
+  Home:{screen:Home},   
   FeedBack:{screen:FeedBack}, 
-  Login:{screen:Login},    
-  Register: { screen: Register },
-  Home:{screen:Home},
-  CompleteProfile: { screen: CompleteProfile }},  
+  
+  // Register: { screen: Register },
+  // CompleteProfile: { screen: CompleteProfile }
+},  
   {
    headerMode:"none"
   });
   
 
-import Register from '../feedBack/components/Register'
+// import Register from '../feedBack/components/Register'
 import Login from '../feedBack/components/Login'
-import CompleteProfile from '../feedBack/components/CompleteProfile'
+// import CompleteProfile from '../feedBack/components/CompleteProfile'
 import Home from '../feedBack/components/HomePage'
 import FeedBack from '../feedBack/components/FeedBack'
 

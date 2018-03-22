@@ -73,11 +73,12 @@ class Register extends Component {
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
-          <Button
+          {/* <Button
             title="Register"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
             onPress={() => navigate("Register")}
-          />
+          /> */}
+          <Text style={styles.title}>FEEDBACK STUDENT APP</Text>
         </View>
       </View>
     );
@@ -85,10 +86,11 @@ class Register extends Component {
   toggleState() {
     console.warn(this.state.showText);
     this.state.showText ? false : true;
-    console.wart(this.state.showText);
+    console.warn(this.state.showText);
   }
   login(user) {
     result = new RegExp("@student.unitbv.ro").test(user);
+    const { navigate } = this.props.navigation;
     if (result) {
       axios
         .get(
@@ -100,8 +102,8 @@ class Register extends Component {
           }
         )
         .then(function(response) {
-          console.log(response.data)
-          
+          //response validation
+          navigate("Home")
         })
         .catch(function(error) {
           console.warn(error);

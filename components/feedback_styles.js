@@ -27,7 +27,8 @@ module.exports = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent:"space-around",
-    alignItems:"center"
+    alignItems:"center",
+    backgroundColor:constants.feedback_color
   },
   card: {
     flex: -1,
