@@ -7,10 +7,9 @@ import {
 
 
 const App = StackNavigator({
- 
-  Login:{screen:Login},   
-  Home:{screen:Home},   
-  FeedBack:{screen:FeedBack}, 
+  Login:{screen:Login},       
+  Home:{screen:Home},     
+  FeedBack:{screen:FeedBack},  
   
   // Register: { screen: Register },
   // CompleteProfile: { screen: CompleteProfile }

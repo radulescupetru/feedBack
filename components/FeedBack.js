@@ -5,10 +5,12 @@ import {
   Image,
   TouchableHighlight,
   Button,
-  ImageBackground
+  Modal,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TextInput
 } from "react-native";
 
-import EmojiFeedBack from "../components/EmojiFeedBack";
 import styles from "../components/feedback_styles";
 import constants from "../constants/Constants";
 import axios from "axios";
@@ -18,7 +20,7 @@ export default class FeedBack extends Component {
   };
   constructor() {
     super();
-    this.state = { selected: false, index: 0, redirect: false };
+    this.state = { selected: false, index: 0, redirect: false, visible: false };
   }
   course = {
     teacher: "S.HOMANA".toUpperCase(),
@@ -80,15 +82,12 @@ export default class FeedBack extends Component {
       feedback_type: "Comprehension",
       feedback_desription:
         "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
-    },
-    {
-      key: 9,
-      feedback_type: "Finished",
-      feedback_desription: "Thank you for your feedback!!!"
     }
   ];
+
   render() {
     const { navigate } = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{"FeedBack".toUpperCase()}</Text>
@@ -103,7 +102,7 @@ export default class FeedBack extends Component {
           </View>
           <View style={styles.card_vote}>
             <View>
-              <Text style={styles.card_text}>
+              <Text style={styles.card_text_dark}>
                 {this.feedBackTypes[this.state.index].feedback_type}
               </Text>
               <Text style={styles.card_text_description}>
@@ -147,6 +146,51 @@ export default class FeedBack extends Component {
             </View>
           </View>
         </View>
+        <View style={styles.card_message}>
+          <TouchableHighlight
+            onPress={() => {
+              this.setState({ visible: true });
+            }}
+          >
+            <Image
+              style={{ height: 30, width: 30 }}
+              source={require("../components/images/message.png")}
+            />
+          </TouchableHighlight>
+
+          <Modal
+            visible={this.state.visible}
+            animationType={"slide"}
+            transparent={true}
+          >
+            <View style={styles.modal_background}>
+              <View style={styles.popup_styles}>
+                <View style={styles.header}>
+                  <Text style={styles.header_title}>{"Enter your message...".toUpperCase()}</Text>
+                </View>
+                <View style={styles.footer}>
+                  <TextInput
+                    style={styles.textInputStyle}
+                    placeholder={"Enter your message...".toUpperCase()}
+                    underlineColorAndroid="transparent"
+                    keyboardType="default"
+                    onChangeText={text => this.setState({ text })}                    
+                    multiline={true}
+                    blurOnSubmit={true}
+                  
+                  />
+                  <Button
+                    color={"#18314F"}
+                    title="Submit message"
+                    onPress={() => {
+                      this.setState({ visible: false });
+                    }}
+                  />
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }
@@ -178,21 +222,17 @@ export default class FeedBack extends Component {
       this.sendFeedBack(this.votes);
     }
   }
-  sendFeedBack(complete_votes){
-    result=true;
+  sendFeedBack(complete_votes) {
+    result = true;
     if (result) {
       axios
-        .get(
-          "http://wickedapp.azurewebsites.net/Feedback/SubmitFeedback/",
-          {
-            params: {
-              feedback:JSON.stringify(complete_votes)
-            }
+        .get("http://wickedapp.azurewebsites.net/Feedback/SubmitFeedback/", {
+          params: {
+            feedback: JSON.stringify(complete_votes)
           }
-        )
+        })
         .then(function(response) {
-          console.log(response.data)
-          
+          console.log(response.data);
         })
         .catch(function(error) {
           console.warn(error);

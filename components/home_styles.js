@@ -6,7 +6,7 @@ import constants from "../constants/Constants";
 
 module.exports = StyleSheet.create({
   page_wrapper: {
-    backgroundColor: constants.primary_color,
+    backgroundColor: constants.home_wrapper_color,
     flex: 1
   },
   header_image: {
@@ -14,7 +14,7 @@ module.exports = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 100,
-    backgroundColor: constants.primary_color,
+    backgroundColor: constants.home_wrapper_color,
     paddingTop: 10
   },
   home_wrapper: {
@@ -60,7 +60,7 @@ module.exports = StyleSheet.create({
   card_style: {
     width: "90%",
     flex:1,
-    backgroundColor: constants.primary_color,
+    backgroundColor: constants.home_wrapper_color,
     marginVertical:10,
     shadowColor: '#000000',
     shadowOffset: {
