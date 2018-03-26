@@ -69,6 +69,7 @@ class Register extends Component {
             color={Platform.OS == "ios" ? "white" : "#00b894"}
             style={styles.button}
             onPress={() => this.login(this.state.text)}
+            
           />
         </KeyboardAvoidingView>
 

@@ -13,62 +13,109 @@ import {
 } from "react-native";
 
 import styles from "../components/home_styles";
-import CardView from "react-native-cardview";
 import CourseCard from "../components/CourseCard";
-
+import axios from "axios";
+const { timetable } = [];
 class HomePage extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loaded: false
+    };
   }
   static navigationOptions = {
     title: "Home"
   };
-  initialArr = [
-    {
-      key: 1,
-      teacher: "S.Homana",
-      course: "Germana",
-      classRoom: "PIII1",
-      time: "8:00-9:50"
-    },
-    {
-      key: 2,
-      teacher: "S.omana",
-      course: "Engleza",
-      classRoom: "PIII1",
-      time: "8:00-9:50"
-    },
-    {
-      key: 3,
-      teacher: "S.Hoana",
-      course: "Franceza",
-      classRoom: "PIII1",
-      time: "8:00-9:50"
-    }
-  ];
+
+  getTimeTable() {
+    var self = this;
+    var localTimeTable = [];
+    axios
+      .get(
+        "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForStudent?id=70"
+        // "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForTeacher?id=443"
+        
+      )
+      .then(function(response) {
+        console.log("First");
+        let time = eval(response.data);
+        for (var i in time) {
+          for (var j in time[JSON.parse(i)]) {
+            if (Array.isArray(time[JSON.parse(i)][j])) {
+              localTimeTable.push({
+                key: JSON.parse(i),
+                value: time[JSON.parse(i)][j]
+              });
+            }
+          }
+        }
+      })
+      .then(function() {
+        console.log("second");
+        timetable = localTimeTable;
+        self.setState({ loaded: true });
+      })
+      .catch(function(error) {
+        console.warn(error);
+      });
+  }
+  componentWillMount() {
+    this.getTimeTable();
+  }
+
   daysArr = [
     {
-      key: 1,
+      key: 0,
       day: require("../components/images/monday.jpg")
     },
     {
-      key: 2,
+      key: 1,
       day: require("../components/images/tuesday.jpg")
+    },
+    {
+      key: 2,
+      day: require("../components/images/wednesday.png")
+    },
+    {
+      key: 3,
+      day: require("../components/images/thursday.jpg")
+    },
+    {
+      key: 4,
+      day: require("../components/images/friday.jpg")
+    },
+    {
+      key: 5,
+      day: require("../components/images/monday.jpg")
+    },
+    {
+      key: 8,
+      day: require("../components/images/tuesday.jpg")
+    },
+    {
+      key: 9,
+      day: require("../components/images/wednesday.png")
+    },
+    {
+      key: 10,
+      day: require("../components/images/thursday.jpg")
+    },
+    {
+      key: 11,
+      day: require("../components/images/friday.jpg")
     }
-  ];
+  ]
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={styles.page_wrapper}>
-        <TouchableHighlight onPress={() => navigate("FeedBack")}>
-          <View style={styles.header_image}>
-            <Image
-              style={{ height: 50, width: 60 }}
-              source={require("../components/images/emblema.png")}
-            />
-          </View>
-        </TouchableHighlight>
+        <View style={styles.header_image}>
+          <Image
+            style={{ height: 50, width: 60 }}
+            source={require("../components/images/emblema.png")}
+          />
+        </View>
         <View style={styles.home_wrapper}>
           <View style={styles.story_wrapper}>
             <ScrollView
@@ -77,27 +124,27 @@ class HomePage extends Component {
               showsHorizontalScrollIndicator={false}
             >
               <View style={styles.story_item}>
-                <TouchableHighlight onPress={()=>this.giveFeedBack()}>
+                <TouchableHighlight onPress={() => this.showFeedBack()}>
                   <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
                 </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-              <TouchableHighlight>
+                <TouchableHighlight>
                   <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
                 </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-              <TouchableHighlight>
+                <TouchableHighlight>
                   <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
                 </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-              <TouchableHighlight>
+                <TouchableHighlight>
                   <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
                 </TouchableHighlight>
               </View>
               <View style={styles.story_item}>
-              <TouchableHighlight>
+                <TouchableHighlight>
                   <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
                 </TouchableHighlight>
               </View>
@@ -112,46 +159,51 @@ class HomePage extends Component {
               {"Feedback cursuri".toUpperCase()}
             </Text>
           </View>
-          <View style={styles.schedule_wrapper}>
-            <ScrollView
-              contentContainerStyle={{
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}
-            >
-              {this.daysArr.map(it => {
-                return (
-                  <View style={styles.card_style} key={it.key} elevation={8}>
-                    <View>
-                      <Image
-                        style={{ height: 100, width: "100%" }}
-                        source={it.day}
-                      />
-                    </View>
-                    {this.initialArr.map(iterator => {
-                      return (
-                        <CourseCard
-                          teacher={iterator.teacher}
-                          course={iterator.course}
-                          classRoom={iterator.classRoom}
-                          time={iterator.time}
-                          key={iterator.key}
+          {this.state.loaded ? (
+            <View style={styles.schedule_wrapper}>
+              <ScrollView
+                contentContainerStyle={{
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "space-between"
+                }}
+              >
+                {this.daysArr.map((it,idx) => {
+                  return (
+                    <View style={styles.card_style} key={it.key} elevation={8}>
+                      <View>
+                        <Image
+                          style={{ height: 100, width: "100%" }}
+                          source={it.day}
                         />
-                      );
-                    })}
-                  </View>
-                );
-              })}
-            </ScrollView>
-          </View>
+                      </View>
+                      {timetable[idx]["value"].map(iter => {
+
+                        return (
+                          <CourseCard
+                            teacher={iter["Teacher"]}
+                            course={iter["ClassName"]}
+                            classRoom={iter["ClassRoom"]}
+                            time={iter["Time"]}
+                            key={iter["Key"]}
+                          />
+                        );
+                      })}
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          ) : (
+            <View />
+          )}
         </View>
       </View>
     );
   }
-  giveFeedBack(){
-    const {navigate} = this.props.navigation
-    navigate("FeedBack")
+  showFeedBack() {
+    const { navigate } = this.props.navigation;
+    navigate("FeedBack");
   }
 }
 
