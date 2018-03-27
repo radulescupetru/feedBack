@@ -20,11 +20,9 @@ export default class FeedBack extends Component {
   };
   constructor() {
     super();
-    this.state = { selected: false, index: 0, redirect: false, visible: false };
+    this.state = { selected: false, index: 0, redirect: false, visible: false, message:"" };
   }
   course = {
-    teacher: "S.HOMANA".toUpperCase(),
-    course: "GERMANA",
     day: require("../components/images/monday.jpg")
   };
   votes = [];
@@ -49,7 +47,7 @@ export default class FeedBack extends Component {
     },
     {
       key: 3,
-      feedback_type: "RigorousScrientificLevel",
+      feedback_type: "RigorousScientificLevel",
       feedback_desription:
         "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
     },
@@ -87,14 +85,14 @@ export default class FeedBack extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-
+    const { params } = this.props.navigation.state;
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{"FeedBack".toUpperCase()}</Text>
         <View style={styles.card}>
           <View style={styles.card_info}>
             <Text style={styles.card_text}>
-              {this.course.teacher + "-" + this.course.course}
+              {params.teacher + "-" + params.class}
             </Text>
             <Text style={styles.card_text}>
               {new Date().toDateString().toLocaleUpperCase()}
@@ -166,7 +164,9 @@ export default class FeedBack extends Component {
             <View style={styles.modal_background}>
               <View style={styles.popup_styles}>
                 <View style={styles.header}>
-                  <Text style={styles.header_title}>{"Enter your message...".toUpperCase()}</Text>
+                  <Text style={styles.header_title}>
+                    {"Enter your message...".toUpperCase()}
+                  </Text>
                 </View>
                 <View style={styles.footer}>
                   <TextInput
@@ -174,10 +174,9 @@ export default class FeedBack extends Component {
                     placeholder={"Enter your message...".toUpperCase()}
                     underlineColorAndroid="transparent"
                     keyboardType="default"
-                    onChangeText={text => this.setState({ text })}                    
+                    onChangeText={text => this.setState({ message:text })}
                     multiline={true}
                     blurOnSubmit={true}
-                  
                   />
                   <Button
                     color={"#18314F"}
@@ -195,7 +194,6 @@ export default class FeedBack extends Component {
     );
   }
   registerVote(grade, type) {
-    console.log(this.state.index + "--" + this.feedBackTypes.length);
     if (grade == "bad") {
       this.votes.push({
         key: type,
@@ -219,10 +217,15 @@ export default class FeedBack extends Component {
       this.setState({
         redirect: true
       });
-      this.sendFeedBack(this.votes);
+      this.votes.push({
+        key: "ActualClass",
+        value: 0
+      });
+      this.sendFeedBack(this.votes,this.state.message);
+      console.log(this.state.message);
     }
   }
-  sendFeedBack(complete_votes) {
+  sendFeedBack(complete_votes,message) {
     result = true;
     if (result) {
       axios
@@ -231,9 +234,7 @@ export default class FeedBack extends Component {
             feedback: JSON.stringify(complete_votes)
           }
         })
-        .then(function(response) {
-          console.log(response.data);
-        })
+        .then(function(response) {})
         .catch(function(error) {
           console.warn(error);
         });

@@ -16,9 +16,11 @@ import styles from "../components/home_styles";
 import CourseCard from "../components/CourseCard";
 import axios from "axios";
 const { timetable } = [];
+
 class HomePage extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       loaded: false
     };
@@ -32,9 +34,8 @@ class HomePage extends Component {
     var localTimeTable = [];
     axios
       .get(
-        "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForStudent?id=70"
+        "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForStudent?id=120"
         // "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForTeacher?id=443"
-        
       )
       .then(function(response) {
         console.log("First");
@@ -51,7 +52,6 @@ class HomePage extends Component {
         }
       })
       .then(function() {
-        console.log("second");
         timetable = localTimeTable;
         self.setState({ loaded: true });
       })
@@ -85,7 +85,7 @@ class HomePage extends Component {
       day: require("../components/images/friday.jpg")
     },
     {
-      key: 5,
+      key: 7,
       day: require("../components/images/monday.jpg")
     },
     {
@@ -104,7 +104,7 @@ class HomePage extends Component {
       key: 11,
       day: require("../components/images/friday.jpg")
     }
-  ]
+  ];
 
   render() {
     const { navigate } = this.props.navigation;
@@ -123,31 +123,25 @@ class HomePage extends Component {
               bounces={true}
               showsHorizontalScrollIndicator={false}
             >
-              <View style={styles.story_item}>
-                <TouchableHighlight onPress={() => this.showFeedBack()}>
-                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
-                </TouchableHighlight>
-              </View>
-              <View style={styles.story_item}>
-                <TouchableHighlight>
-                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
-                </TouchableHighlight>
-              </View>
-              <View style={styles.story_item}>
-                <TouchableHighlight>
-                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
-                </TouchableHighlight>
-              </View>
-              <View style={styles.story_item}>
-                <TouchableHighlight>
-                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
-                </TouchableHighlight>
-              </View>
-              <View style={styles.story_item}>
-                <TouchableHighlight>
-                  <Text style={styles.course_title}>{"ptr".toUpperCase()}</Text>
-                </TouchableHighlight>
-              </View>
+              {this.state.loaded ? (
+                timetable[this.getCurrentDay()]["value"].map(iter => {
+                  return (
+                    <View style={styles.story_item} key={iter["Key"]}>
+                      <TouchableHighlight
+                        onPress={() =>
+                          this.showFeedBack(iter["ClassName"], iter["Teacher"])
+                        }
+                      >
+                        <Text style={styles.course_title}>
+                          {iter["ClassName"].substr(0, 3).toUpperCase()}
+                        </Text>
+                      </TouchableHighlight>
+                    </View>
+                  );
+                })
+              ) : (
+                <View />
+              )}
             </ScrollView>
             <Text
               style={{
@@ -162,13 +156,18 @@ class HomePage extends Component {
           {this.state.loaded ? (
             <View style={styles.schedule_wrapper}>
               <ScrollView
+                ref={ref => {
+                  this.myScroll = ref;
+                  this.myScroll.scrollTo({x:0,y:250*this.getCurrentDay(),animated:true}); // !!
+                }}
+                
                 contentContainerStyle={{
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "space-between"
                 }}
               >
-                {this.daysArr.map((it,idx) => {
+                {this.daysArr.map((it, idx) => {
                   return (
                     <View style={styles.card_style} key={it.key} elevation={8}>
                       <View>
@@ -178,7 +177,6 @@ class HomePage extends Component {
                         />
                       </View>
                       {timetable[idx]["value"].map(iter => {
-
                         return (
                           <CourseCard
                             teacher={iter["Teacher"]}
@@ -201,9 +199,16 @@ class HomePage extends Component {
       </View>
     );
   }
-  showFeedBack() {
+  showFeedBack(className, teacherName) {
     const { navigate } = this.props.navigation;
-    navigate("FeedBack");
+    navigate("FeedBack", { class: className, teacher: teacherName });
+  }
+  getCurrentDay() {
+    var date2 = new Date("02/19/2018");
+    var timeDiff = Math.abs(new Date() - date2.getTime());
+    var days = Math.floor(timeDiff / (1000 * 3600 * 24)) % 14;
+    if (days > 4) days -= 2;
+    return days;
   }
 }
 

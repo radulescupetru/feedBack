@@ -66,7 +66,7 @@ class Register extends Component {
           />
           <Button
             title="Login"
-            color={Platform.OS == "ios" ? "white" : "#00b894"}
+            color={Platform.OS == "ios" ? "white" : "#18314F"}
             style={styles.button}
             onPress={() => this.login(this.state.text)}
             
