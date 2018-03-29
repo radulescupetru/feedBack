@@ -15,16 +15,19 @@ import {
 import styles from "../components/styles";
 import axios from "axios";
 
-class Register extends Component {
+class Login extends Component {
   constructor() {
     super();
     this.state = {
-      showText: true
+      showText: true,
+      user: "",
+      pass: ""
     };
   }
   static navigationOptions = {
     title: "Login"
   };
+  GLOBAL = require("./globals");
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -53,7 +56,7 @@ class Register extends Component {
             placeholder={"name@student.unitbv.ro".toUpperCase()}
             underlineColorAndroid="transparent"
             keyboardType="email-address"
-            onChangeText={text => this.setState({ text })}
+            onChangeText={text => this.setState({ user: text })}
           />
           <TextInput
             style={styles.textInputStyle}
@@ -61,24 +64,23 @@ class Register extends Component {
             underlineColorAndroid="transparent"
             keyboardType="default"
             secureTextEntry={true}
-            onChangeText={text => this.setState({ text })}
+            onChangeText={text => this.setState({ pass: text })}
             onFocus={() => this.toggleState}
           />
           <Button
             title="Login"
             color={Platform.OS == "ios" ? "white" : "#18314F"}
             style={styles.button}
-            onPress={() => this.login(this.state.text)}
-            
+            onPress={() => this.login(this.state.user, this.state.pass)}
           />
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
-          {/* <Button
+          <Button
             title="Register"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
             onPress={() => navigate("Register")}
-          /> */}
+          />
           <Text style={styles.title}>FEEDBACK STUDENT APP</Text>
         </View>
       </View>
@@ -89,28 +91,64 @@ class Register extends Component {
     this.state.showText ? false : true;
     console.warn(this.state.showText);
   }
-  login(user) {
-    result = new RegExp("@student.unitbv.ro").test(user);
+  login(user, pass) {
+    let self = this;
     const { navigate } = this.props.navigation;
-    if (result) {
-      axios
-        .get(
-          "http://wickedapp.azurewebsites.net/Account/StudentLogin/",
-          {
-            params: {
-              email: user
+    axios
+      .post("http://wickedapp.azurewebsites.net/Account/StudentLogin/", {
+        email: user,
+        password: pass
+      })
+      .then(function(response) {
+        let res = response.data;
+        console.log(response);
+        if (res == -1) {
+          Alert.alert(
+            "Login failed",
+            "Account not found, please register first",
+            {
+              cancelable: true
             }
-          }
-        )
-        .then(function(response) {
-          //response validation
-          navigate("Home")
-        })
-        .catch(function(error) {
-          console.warn(error);
-        });
-    }
+          );
+        } else if (res == 0) {
+          Alert.alert(
+            "Login failed",
+            "Email has not been confirmed",
+            [
+              { text: "Resend", onPress: () => self.resendEmail(user) },
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              }
+            ],
+            { cancelable: true }
+          );
+        } else {
+          self.GLOBAL.userId = res;
+          navigate("Home");
+        }
+      })
+      .catch(function(error) {
+        console.warn(error);
+      });
+  }
+  resendEmail(user) {
+    axios
+      .post(
+        "http://wickedapp.azurewebsites.net/Account/ResendConfirmationEmail",
+        {
+          email: user
+        }
+      )
+      .then(function(response) {
+        self.GLOBAL.userId = res;
+        navigate("Home");
+      })
+      .catch(function(error) {
+        console.warn(error);
+      });
   }
 }
 
-export default Register;
+export default Login;

@@ -9,7 +9,8 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   SectionList,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
 } from "react-native";
 
 import styles from "../components/home_styles";
@@ -26,7 +27,9 @@ class HomePage extends Component {
     };
   }
   static navigationOptions = {
-    title: "Home"
+    title: "Home",
+    gesturesEnabled: false
+
   };
 
   getTimeTable() {
@@ -34,11 +37,13 @@ class HomePage extends Component {
     var localTimeTable = [];
     axios
       .get(
-        "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForStudent?id=120"
-        // "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForTeacher?id=443"
+        "http://wickedapp.azurewebsites.net/Home/GetAppointmentsForStudent",{
+          params:{
+            id:self.GLOBAL.userId
+          }
+        }
       )
       .then(function(response) {
-        console.log("First");
         let time = eval(response.data);
         for (var i in time) {
           for (var j in time[JSON.parse(i)]) {
@@ -85,6 +90,14 @@ class HomePage extends Component {
       day: require("../components/images/friday.jpg")
     },
     {
+      key: 5,
+      day: require("../components/images/saturday.png")
+    },
+    {
+      key: 6,
+      day: require("../components/images/sunday.png")
+    },
+    {
       key: 7,
       day: require("../components/images/monday.jpg")
     },
@@ -103,8 +116,17 @@ class HomePage extends Component {
     {
       key: 11,
       day: require("../components/images/friday.jpg")
-    }
+    },
+    {
+      key: 12,
+      day: require("../components/images/saturday.png")
+    },
+    {
+      key: 13,
+      day: require("../components/images/sunday.png")
+    },
   ];
+  GLOBAL = require("./globals");
 
   render() {
     const { navigate } = this.props.navigation;
@@ -129,7 +151,7 @@ class HomePage extends Component {
                     <View style={styles.story_item} key={iter["Key"]}>
                       <TouchableHighlight
                         onPress={() =>
-                          this.showFeedBack(iter["ClassName"], iter["Teacher"])
+                          this.showFeedBack(iter["ClassName"], iter["Teacher"],iter["ClassId"])
                         }
                       >
                         <Text style={styles.course_title}>
@@ -140,7 +162,7 @@ class HomePage extends Component {
                   );
                 })
               ) : (
-                <View />
+                <View/>
               )}
             </ScrollView>
             <Text
@@ -182,7 +204,7 @@ class HomePage extends Component {
                             teacher={iter["Teacher"]}
                             course={iter["ClassName"]}
                             classRoom={iter["ClassRoom"]}
-                            time={iter["Time"]}
+                            time={iter["Time"]==-1?"":iter["Time"]}
                             key={iter["Key"]}
                           />
                         );
@@ -193,21 +215,20 @@ class HomePage extends Component {
               </ScrollView>
             </View>
           ) : (
-            <View />
+            <ActivityIndicator size="large" color="black" />
           )}
         </View>
       </View>
     );
   }
-  showFeedBack(className, teacherName) {
+  showFeedBack(className, teacherName,classId) {
     const { navigate } = this.props.navigation;
-    navigate("FeedBack", { class: className, teacher: teacherName });
+    navigate("FeedBack", { class: className, teacher: teacherName,classId:classId });
   }
   getCurrentDay() {
     var date2 = new Date("02/19/2018");
     var timeDiff = Math.abs(new Date() - date2.getTime());
     var days = Math.floor(timeDiff / (1000 * 3600 * 24)) % 14;
-    if (days > 4) days -= 2;
     return days;
   }
 }

@@ -8,19 +8,31 @@ import {
   Modal,
   ImageBackground,
   KeyboardAvoidingView,
-  TextInput
+  TextInput,
 } from "react-native";
 
 import styles from "../components/feedback_styles";
 import constants from "../constants/Constants";
 import axios from "axios";
+
+const { classId } = 0
 export default class FeedBack extends Component {
   static navigationOptions = {
-    title: "FeedBack"
+    title: "FeedBack",
+    gesturesEnabled: false
+
   };
   constructor() {
     super();
-    this.state = { selected: false, index: 0, redirect: false, visible: false, message:"" };
+    this.state = {
+      selected: false,
+      index: 0,
+      redirect: false,
+      visible: false,
+      message: "",
+      classId:0
+   
+    };
   }
   course = {
     day: require("../components/images/monday.jpg")
@@ -31,55 +43,55 @@ export default class FeedBack extends Component {
       key: 0,
       feedback_type: "Usefulness",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "Do you think you will make use of what you learned today?"
     },
     {
       key: 1,
       feedback_type: "Novelty",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "How much of the information presented today was new to you?"
     },
     {
       key: 2,
       feedback_type: "HighScientificLevel",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "Do you think the course material was understandable by someone with medium skills in this topic?"
     },
     {
       key: 3,
       feedback_type: "RigorousScientificLevel",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "Do you think the course material was diving too deep into the topics?"
     },
     {
       key: 4,
       feedback_type: "Attractiveness",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "How much you enjoyed taking this course?"
     },
     {
       key: 5,
       feedback_type: "Clearness",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "Was the course material clear enought for you to grasp?"
     },
     {
       key: 6,
       feedback_type: "Correctness",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "Did you indentify any mistakes in what was presented to you in class?"
     },
     {
       key: 7,
       feedback_type: "Interactivity",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "What was the interaction of the teacher with the students?"
     },
     {
       key: 8,
       feedback_type: "Comprehension",
       feedback_desription:
-        "Lorem Ipsum este pur şi simplu o machetă pentru text a industriei tipografice. Lorem Ipsum a fost macheta standard a industriei încă din secolul al XVI-lea,"
+        "How much of the course material did you understand enought to not recap the subjects?"
     }
   ];
 
@@ -106,10 +118,11 @@ export default class FeedBack extends Component {
               <Text style={styles.card_text_description}>
                 {this.feedBackTypes[this.state.index].feedback_desription}
               </Text>
+              <Text style={{opacity:0}} >{classId=params.classId})}</Text>
             </View>
             <View style={styles.button_container}>
               <Button
-                title="BAD"
+                title="NO"
                 onPress={() =>
                   this.state.redirect
                     ? navigate("Home")
@@ -120,7 +133,7 @@ export default class FeedBack extends Component {
                 }
               />
               <Button
-                title="OK"
+                title="NOT SURE"
                 onPress={() =>
                   this.state.redirect
                     ? navigate("Home")
@@ -131,7 +144,7 @@ export default class FeedBack extends Component {
                 }
               />
               <Button
-                title="GOOD"
+                title="YES"
                 onPress={() =>
                   this.state.redirect
                     ? navigate("Home")
@@ -174,7 +187,8 @@ export default class FeedBack extends Component {
                     placeholder={"Enter your message...".toUpperCase()}
                     underlineColorAndroid="transparent"
                     keyboardType="default"
-                    onChangeText={text => this.setState({ message:text })}
+                    value={this.state.message}
+                    onChangeText={text => this.setState({ message: text })}
                     multiline={true}
                     blurOnSubmit={true}
                   />
@@ -210,28 +224,32 @@ export default class FeedBack extends Component {
         value: 3
       });
     }
-    this.setState({
-      index: this.state.index + 1
-    });
-    if (this.state.index === this.feedBackTypes.length - 2) {
+    console.log(this.state.index + "--" + (this.feedBackTypes.length - 1));
+    if (this.state.index == this.feedBackTypes.length - 1) {
       this.setState({
         redirect: true
       });
       this.votes.push({
-        key: "ActualClass",
-        value: 0
+        key: "ClassId",
+        value: classId
       });
-      this.sendFeedBack(this.votes,this.state.message);
-      console.log(this.state.message);
+      this.sendFeedBack(this.votes, this.state.message);
+      console.log(this.votes);
+    } else {
+      this.setState({
+        index: this.state.index + 1
+      });
     }
   }
-  sendFeedBack(complete_votes,message) {
+  sendFeedBack(complete_votes, message) {
     result = true;
+    console.log(message);
     if (result) {
       axios
         .get("http://wickedapp.azurewebsites.net/Feedback/SubmitFeedback/", {
           params: {
-            feedback: JSON.stringify(complete_votes)
+            feedback: JSON.stringify(complete_votes),
+            message: message
           }
         })
         .then(function(response) {})

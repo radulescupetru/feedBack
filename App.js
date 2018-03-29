@@ -7,11 +7,11 @@ import {
 
 
 const App = StackNavigator({
+
+  Login:{screen:Login},         
   Home:{screen:Home},       
-  Lgin:{screen:Login},       
   FeedBack:{screen:FeedBack},  
-  
-  // Register: { screen: Register },
+  Register: { screen: Register },
   // CompleteProfile: { screen: CompleteProfile }
 },  
   {
@@ -19,7 +19,7 @@ const App = StackNavigator({
   });
   
 
-// import Register from '../feedBack/components/Register'
+import Register from '../feedBack/components/Register'
 import Login from '../feedBack/components/Login'
 // import CompleteProfile from '../feedBack/components/CompleteProfile'
 import Home from '../feedBack/components/HomePage'

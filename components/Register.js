@@ -19,7 +19,9 @@ class Register extends Component {
   constructor() {
     super();
     this.state = {
-      text: ""
+      user: "",
+      pass: "",
+      fLang: ""
     };
   }
   static navigationOptions = {
@@ -50,14 +52,28 @@ class Register extends Component {
             placeholder={"name@student.unitbv.ro".toUpperCase()}
             underlineColorAndroid="transparent"
             keyboardType="email-address"
-            onChangeText={text => this.setState({ text })}
+            onChangeText={text => this.setState({ user: text })}
+          />
+          <TextInput
+            style={styles.textInputStyle}
+            placeholder={"password".toUpperCase()}
+            underlineColorAndroid="transparent"
+            secureTextEntry={true}
+            onChangeText={text => this.setState({ pass: text })}
+          />
+          <TextInput
+            style={styles.textInputStyle}
+            placeholder={"Foreign language".toUpperCase()}
+            underlineColorAndroid="transparent"
+            onChangeText={text => this.setState({ fLang: text })}
           />
 
           <Button
-            title="Set your profile"
+            title="Register account"
             color={Platform.OS == "ios" ? "white" : "#00b894"}
-            // onPress={() => this.checkUser(this.state.text)}
-            onPress={()=>navigate("Home")}
+            onPress={() =>
+              this.register(this.state.user, this.state.pass, this.state.fLang)
+            }
           />
         </KeyboardAvoidingView>
 
@@ -70,20 +86,23 @@ class Register extends Component {
   validateEmail = email => {
     return false;
   };
-  checkUser(user) {
+  register(user, pass, fLang) {
+    let self = this;
+    const { navigate } = this.props.navigation;    
     axios
-      .get(
-        "http://wickedwebapiweb20180214010303.azurewebsites.net/Account/CheckEmail",
-        {
-          params: {
-            email: user
-          }
-        }
-      )
+      .post("http://wickedapp.azurewebsites.net/Account/RegisterAsync", {
+        email: user,
+        password: pass,
+        foreignLanguage: fLang
+      })
       .then(function(response) {
-        if (response.data == "True") {
-          ()=>navigate("Home");
-        }
+        console.log(response);
+        Alert.alert(
+          "Complete registration",
+          "Please confirm your email",
+          [{ text: "OK", onPress: () => navigate("Login") }],
+          { cancelable: false }
+        );
       })
       .catch(function(error) {
         console.warn(error);

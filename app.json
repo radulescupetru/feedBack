@@ -1,5 +1,14 @@
 {
   "expo": {
-    "sdkVersion": "25.0.0"
+   "name": "MyUnitBV",
+   "version": "1.0.0",
+   "slug": "expo.io/@radulescupetru/native_wickedapp",
+   "sdkVersion": "25.0.0",
+   "ios": {
+     "bundleIdentifier": "com.unitbv.myunitbv"
+   },
+   "android": {
+     "package": "com.unitbv.myunitbv"
+   }
   }
 }
