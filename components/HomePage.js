@@ -8,8 +8,8 @@ import {
   Button,
   KeyboardAvoidingView,
   ScrollView,
-  SectionList,
   TouchableHighlight,
+  Alert,
   ActivityIndicator
 } from "react-native";
 
@@ -222,8 +222,21 @@ class HomePage extends Component {
     );
   }
   showFeedBack(className, teacherName,classId) {
-    const { navigate } = this.props.navigation;
+  
+    if(classId!=-1)
+    {
+      const { navigate } = this.props.navigation;
     navigate("FeedBack", { class: className, teacher: teacherName,classId:classId });
+    }
+    else{
+      Alert.alert(
+        "No classes to submit feedback",
+        "Enjoy your weekend",
+        [{ text: "Thanks"}],
+        { cancelable: true }
+      );
+    }
+    
   }
   getCurrentDay() {
     var date2 = new Date("02/19/2018");

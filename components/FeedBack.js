@@ -4,23 +4,22 @@ import {
   Text,
   Image,
   TouchableHighlight,
-  Button,
   Modal,
   ImageBackground,
   KeyboardAvoidingView,
   TextInput,
+  Button
 } from "react-native";
 
 import styles from "../components/feedback_styles";
 import constants from "../constants/Constants";
 import axios from "axios";
 
-const { classId } = 0
+const { classId } = 0;
 export default class FeedBack extends Component {
   static navigationOptions = {
     title: "FeedBack",
     gesturesEnabled: false
-
   };
   constructor() {
     super();
@@ -30,8 +29,7 @@ export default class FeedBack extends Component {
       redirect: false,
       visible: false,
       message: "",
-      classId:0
-   
+      classId: 0
     };
   }
   course = {
@@ -66,8 +64,7 @@ export default class FeedBack extends Component {
     {
       key: 4,
       feedback_type: "Attractiveness",
-      feedback_desription:
-        "How much you enjoyed taking this course?"
+      feedback_desription: "How much you enjoyed taking this course?"
     },
     {
       key: 5,
@@ -111,18 +108,17 @@ export default class FeedBack extends Component {
             </Text>
           </View>
           <View style={styles.card_vote}>
-            <View>
+            <View style={{height:100}}>
               <Text style={styles.card_text_dark}>
                 {this.feedBackTypes[this.state.index].feedback_type}
               </Text>
               <Text style={styles.card_text_description}>
                 {this.feedBackTypes[this.state.index].feedback_desription}
               </Text>
-              <Text style={{opacity:0}} >{classId=params.classId})}</Text>
+              <Text style={{ opacity: 0 }}>{(classId = params.classId)})}</Text>
             </View>
             <View style={styles.button_container}>
-              <Button
-                title="NO"
+              <TouchableHighlight
                 onPress={() =>
                   this.state.redirect
                     ? navigate("Home")
@@ -131,9 +127,10 @@ export default class FeedBack extends Component {
                         this.feedBackTypes[this.state.index].feedback_type
                       )
                 }
-              />
-              <Button
-                title="NOT SURE"
+              >
+                <Text style={styles.button}>NO</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
                 onPress={() =>
                   this.state.redirect
                     ? navigate("Home")
@@ -142,9 +139,10 @@ export default class FeedBack extends Component {
                         this.feedBackTypes[this.state.index].feedback_type
                       )
                 }
-              />
-              <Button
-                title="YES"
+              >
+                <Text style={styles.button}>NOT SURE</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
                 onPress={() =>
                   this.state.redirect
                     ? navigate("Home")
@@ -153,7 +151,9 @@ export default class FeedBack extends Component {
                         this.feedBackTypes[this.state.index].feedback_type
                       )
                 }
-              />
+              >
+                <Text style={styles.button}>YES</Text>
+              </TouchableHighlight>
             </View>
           </View>
         </View>
@@ -162,6 +162,7 @@ export default class FeedBack extends Component {
             onPress={() => {
               this.setState({ visible: true });
             }}
+            elevation={8}
           >
             <Image
               style={{ height: 30, width: 30 }}

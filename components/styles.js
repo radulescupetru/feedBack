@@ -23,6 +23,12 @@ module.exports = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  button:{
+    color:"white",
+    fontSize:18,
+    marginTop:10,
+    marginBottom:10
+  },
   buttons: {
     flex: 1,
     marginTop: -50,

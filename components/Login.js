@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  Button,
+  TouchableHighlight,
   Alert,
   KeyboardAvoidingView,
   Platform
@@ -67,20 +67,17 @@ class Login extends Component {
             onChangeText={text => this.setState({ pass: text })}
             onFocus={() => this.toggleState}
           />
-          <Button
-            title="Login"
-            color={Platform.OS == "ios" ? "white" : "#18314F"}
-            style={styles.button}
+          <TouchableHighlight
             onPress={() => this.login(this.state.user, this.state.pass)}
-          />
+          >
+            <Text style={styles.button}>Login</Text>
+          </TouchableHighlight>
+          
         </KeyboardAvoidingView>
-
+        <TouchableHighlight onPress={() => navigate("Register")}>
+            <Text style={styles.button}>Register</Text>
+          </TouchableHighlight>
         <View style={styles.credits}>
-          <Button
-            title="Register"
-            color={Platform.OS == "ios" ? "white" : "#00b894"}
-            onPress={() => navigate("Register")}
-          />
           <Text style={styles.title}>FEEDBACK STUDENT APP</Text>
         </View>
       </View>

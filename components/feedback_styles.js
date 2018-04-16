@@ -93,13 +93,15 @@ module.exports = StyleSheet.create({
     height:"70%",
     width:"80%",
     borderRadius:15,
+    borderWidth: 1,
+    borderColor: constants.primary_color,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
       height: 3
     },
     shadowRadius: 5,
-    shadowOpacity: 0.3
+    shadowOpacity: 0.5  
   },
   card_info:{
     flex:1,
@@ -128,11 +130,19 @@ module.exports = StyleSheet.create({
     color:constants.text_color
   },
   button_container:{
-      flex:1,
-      flexDirection:"row",
-      alignItems:"center",
-      justifyContent:"space-between"
+    flex:1,
+    width:"100%",
+    flexDirection:"row",
+    alignItems:"center",
+    justifyContent:"space-around"
   },
+  button:{
+    color:constants.primary_color,
+    fontSize:16,
+    
+    fontWeight:"800"
+  },
+
   textInputStyle:{
     height:100,
     width:"80%",

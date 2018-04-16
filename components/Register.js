@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Image,
   TextInput,
-  Button,
+  TouchableHighlight,
   Alert,
   KeyboardAvoidingView,
   Platform
@@ -67,14 +67,13 @@ class Register extends Component {
             underlineColorAndroid="transparent"
             onChangeText={text => this.setState({ fLang: text })}
           />
-
-          <Button
-            title="Register account"
-            color={Platform.OS == "ios" ? "white" : "#00b894"}
+          <TouchableHighlight
             onPress={() =>
               this.register(this.state.user, this.state.pass, this.state.fLang)
             }
-          />
+          >
+            <Text style={styles.button}>Register account</Text>
+          </TouchableHighlight>
         </KeyboardAvoidingView>
 
         <View style={styles.credits}>
@@ -99,9 +98,9 @@ class Register extends Component {
         console.log(response);
         Alert.alert(
           "Complete registration",
-          "Please confirm your email",
+          response.data,
           [{ text: "OK", onPress: () => navigate("Login") }],
-          { cancelable: false }
+          { cancelable: true }
         );
       })
       .catch(function(error) {
